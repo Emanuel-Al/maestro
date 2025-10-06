@@ -1,13 +1,7 @@
 import "./App.css";
-import Button from "@mui/material/Button";
-
+import RouterProvider from "./routes";
 function App() {
-  return (
-    <>
-      <p>Maestro</p>
-      <Button variant="contained">Hello World</Button>
-    </>
-  );
+  return <RouterProvider />;
 }
 
 export default App;
