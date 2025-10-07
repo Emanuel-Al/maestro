@@ -1,10 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 
-type Status = "WANT_TO_LEARN" | "LEARNING" | "PRACTICING" | "LEARNT";
-
 interface TagProps {
-  status: Status;
+  status: string;
 }
 
 const Tag = ({ status }: TagProps) => {
