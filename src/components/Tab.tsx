@@ -11,8 +11,8 @@ const Tab = ({ isActive, page }: TabProps) => {
       <button
         className={
           isActive
-            ? "bg-[#3478F6] p-1.5 text-white rounded-2xl min-w-24 cursor-pointer hover:opacity-70"
-            : "bg-white p-2 text-gray-400 rounded-2xl cursor-pointer hover:opacity-70"
+            ? "bg-[#3478F6] p-1.5 text-white rounded-2xl min-w-24 cursor-pointer hover:opacity-70 shadow-sm"
+            : "bg-white p-2 text-gray-400 rounded-2xl cursor-pointer hover:opacity-70 shadow-sm"
         }
       >
         {page}

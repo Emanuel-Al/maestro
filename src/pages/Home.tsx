@@ -29,7 +29,7 @@ const Home = () => {
         </div>
       </section>
       {/* CHART*/}
-      <section className="bg-white mt-4 p-5 ">
+      <section className="bg-white mt-4 p-5 shadow-sm">
         <Chart val1={2} val2={3} val3={1} val4={1} />
       </section>
       {/* SONGS*/}
