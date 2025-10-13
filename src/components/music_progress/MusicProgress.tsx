@@ -1,6 +1,6 @@
 import React from "react";
 import { LinearProgress } from "@mui/material";
-import Tag from "./Tag";
+import Tag from "../tag/Tag";
 
 type Status = "LEARNING" | "LEARNT" | "WANT_TO_LEARN" | "PRACTICING";
 

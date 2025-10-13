@@ -1,10 +1,10 @@
 import React from "react";
-import Tag from "../components/Tag";
-import MusicProgress from "../components/MusicProgress";
-import AddSongBtn from "../components/AddSongBtn";
-import Chart from "../components/Chart";
-import DarkModeBtn from "../components/DarkModeBtn";
-import OverviewCard from "../components/OverviewCard";
+import Tag from "../components/tag/Tag";
+import MusicProgress from "../components/music_progress/MusicProgress";
+import AddSongBtn from "../components/buttons/AddSongBtn";
+import Chart from "../components/chart/Chart";
+import DarkModeBtn from "../components/buttons/DarkModeBtn";
+import OverviewCard from "../components/overview_card/OverviewCard";
 
 const Home = () => {
   return (

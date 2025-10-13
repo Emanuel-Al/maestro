@@ -1,7 +1,7 @@
 import React from "react";
-import FilterBtn from "../components/FilterBtn";
-import Tab from "../components/Tab";
-import MusicProgress from "../components/MusicProgress";
+import FilterBtn from "../components/buttons/FilterBtn";
+import Tab from "../components/buttons/Tab";
+import MusicProgress from "../components/music_progress/MusicProgress";
 
 const Songs = () => {
   return (
