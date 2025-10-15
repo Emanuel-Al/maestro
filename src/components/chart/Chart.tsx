@@ -19,7 +19,6 @@ const Chart = ({ val1, val2, val3, val4 }: ChartProps) => {
     margin: { right: 5 },
     width: 200,
     height: 200,
-    hideLegend: true,
   };
   return (
     <div>

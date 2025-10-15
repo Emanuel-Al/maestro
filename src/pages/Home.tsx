@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tag from "../components/tag/Tag";
 import MusicProgress from "../components/music_progress/MusicProgress";
 import AddSongBtn from "../components/buttons/AddSongBtn";
 import Chart from "../components/chart/Chart";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import OverviewCard from "../components/overview_card/OverviewCard";
+import { getSongs } from "../api/songs";
+import { useState } from "react";
 
 const Home = () => {
+  const [songs, setSongs] = useState<any[]>([]);
+  useEffect(() => {
+    async function fetchSongs() {
+      try {
+        const data = await getSongs();
+        setSongs(data);
+      } catch (err) {
+        console.error("Erro ao buscar músicas:", err);
+      }
+    }
+
+    fetchSongs();
+  }, []);
+
+  console.log(songs);
   return (
     <div className="min-h-full flex-col items-center px-6">
       {/* HEADER*/}
@@ -42,35 +59,15 @@ const Home = () => {
             <AddSongBtn />
           </div>
         </div>
-        <div className="">
-          <div className="mt-2 mb-2">
+        <div className="mt-2 mb-2">
+          {songs.map((song) => (
             <MusicProgress
-              band="Korn"
-              name="Freak on a Leash"
-              status="LEARNING"
+              key={song.id}
+              name={song.name}
+              band={song.band}
+              status={song.status}
             />
-          </div>
-          <div className="mt-2 mb-2">
-            <MusicProgress
-              band="Linkin Park"
-              name="Somewhere I belong"
-              status="LEARNT"
-            />
-          </div>
-          <div className="mt-2 mb-2">
-            <MusicProgress
-              band="Avenged Sevenfold"
-              name="A little Piece of Heaven"
-              status="PRACTICING"
-            />
-          </div>
-          <div className="mt-2 mb-2">
-            <MusicProgress
-              band="Metallica"
-              name="Seek and Destroy"
-              status="WANT_TO_LEARN"
-            />
-          </div>
+          ))}
         </div>
       </section>
     </div>
