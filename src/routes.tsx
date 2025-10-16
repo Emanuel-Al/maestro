@@ -9,8 +9,8 @@ const RouterProvider = () => {
     <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route caseSensitive index element={<Home />} />
-          <Route caseSensitive path="songs" element={<Songs />} />
+          <Route index element={<Home />} />
+          <Route path="songs" element={<Songs />} />
         </Route>
       </Routes>
     </BrowserRouter>
