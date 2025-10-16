@@ -25,11 +25,13 @@ const Home = () => {
 
   console.log(songs);
   return (
-    <div className="min-h-full flex-col items-center px-6">
+    <div className="min-h-screen flex flex-col items-center px-6 p-1.5 w-full bg-[#F8F8F8] dark:bg-[#121212]">
       {/* HEADER*/}
       <header className="flex justify-between w-full mt-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Olá, Músico!</h1>
+          <h1 className="text-3xl font-bold text-black dark:text-white">
+            Olá, Músico!
+          </h1>
           <p className="text-gray-400">Aqui está o resumo do seu progresso</p>
         </div>
         <div>
@@ -38,7 +40,9 @@ const Home = () => {
       </header>
       {/* OVERVIEW*/}
       <section className="w-full mt-6 mb-6">
-        <h2 className="text-xl font-semibold mb-2">Visão geral</h2>
+        <h2 className="text-xl font-semibold mb-2 dark:text-white">
+          Visão geral
+        </h2>
         <div className="flex justify-start gap-4">
           <OverviewCard count={1} status="Aprendidas" />
           <OverviewCard count={3} status="Aprendendo" />
@@ -46,20 +50,20 @@ const Home = () => {
         </div>
       </section>
       {/* CHART*/}
-      <section className="bg-white mt-4 p-5 shadow-sm">
+      <section className="w-full bg-white dark:bg-[#1E1E1E] mt-4 p-5 shadow-sm rounded-lg">
         <Chart val1={2} val2={3} val3={1} val4={1} />
       </section>
       {/* SONGS*/}
-      <section>
+      <section className="w-full">
         <div className="flex justify-between mt-4">
-          <div className="text-xl font-semibold">
+          <div className="text-xl font-semibold dark:text-white">
             <h2>Músicas em Andamento: </h2>
           </div>
           <div>
             <AddSongBtn />
           </div>
         </div>
-        <div className="mt-2 mb-2">
+        <div className="mt-2 mb-2 w-full flex flex-col gap-2">
           {songs.map((song) => (
             <MusicProgress
               key={song.id}

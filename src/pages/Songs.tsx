@@ -2,14 +2,20 @@ import React from "react";
 import FilterBtn from "../components/buttons/FilterBtn";
 import Tab from "../components/buttons/Tab";
 import MusicProgress from "../components/music_progress/MusicProgress";
+import DarkModeBtn from "../components/buttons/DarkModeBtn";
 
 const Songs = () => {
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
       {/* Header */}
       <header className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Minhas Músicas</h1>
-        <FilterBtn />
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          Minhas Músicas
+        </h1>
+        <div className="flex gap-10">
+          <FilterBtn />
+          <DarkModeBtn />
+        </div>
       </header>
 
       {/* Tabs */}
