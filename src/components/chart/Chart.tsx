@@ -15,13 +15,10 @@ const Chart = ({ val1, val2, val3, val4 }: ChartProps) => {
     { label: "Praticando", value: val3, color: "#F97316" },
     { label: "Aprendida", value: val4, color: "#22C55E" },
   ];
-  const settings = {
-    margin: { right: 5 },
-    width: 200,
-    height: 200,
-  };
+
   return (
-    <div>
+    <div className="flex flex-col items-center">
+      {/* PieChart */}
       <PieChart
         series={[
           {
@@ -32,8 +29,27 @@ const Chart = ({ val1, val2, val3, val4 }: ChartProps) => {
             faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
           },
         ]}
-        {...settings}
+        width={200}
+        height={200}
+        hideLegend={true}
       />
+
+      {/* Custom Legend */}
+      <div className="flex gap-4 mt-4 flex-wrap justify-center">
+        {data.map((d) => (
+          <div key={d.label} className="flex items-center gap-2">
+            {/* Color box */}
+            <div
+              style={{ backgroundColor: d.color }}
+              className="w-4 h-4 rounded-sm"
+            ></div>
+            {/* Label */}
+            <span className="text-gray-800 dark:text-white font-medium">
+              {d.label}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

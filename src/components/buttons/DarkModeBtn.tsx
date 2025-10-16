@@ -1,22 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMoonSharp } from "react-icons/io5";
 import { MdWbSunny } from "react-icons/md";
-import { useState } from "react";
+import useDarkMode from "../../hooks/useDarkMode";
+
 const DarkModeBtn = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  const handleClick = () => {
-    setDarkMode(!darkMode);
-  };
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+
   return (
     <button
       className={
-        darkMode
+        isDarkMode
           ? "rounded-4xl bg-[#1E1E1E] p-2 cursor-pointer hover:bg-blue-400 transition delay-50"
           : "rounded-4xl bg-white p-2 cursor-pointer hover:bg-blue-400 transition delay-50"
       }
-      onClick={handleClick}
+      onClick={toggleDarkMode}
     >
-      {darkMode ? (
+      {isDarkMode ? (
         <MdWbSunny size={30} color="yellow" />
       ) : (
         <IoMoonSharp size={30} />

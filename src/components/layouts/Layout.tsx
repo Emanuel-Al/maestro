@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="min-h-screen w-full bg-[#F8F8F8] dark:bg-[#121212]">
       <main className="pb-20">
         <Outlet />
       </main>

@@ -5,7 +5,7 @@ import { NavLink } from "react-router";
 
 const Footer = () => {
   return (
-    <div className="fixed left-0 bottom-0 flex border-t border-gray-200 bg-white w-full justify-evenly py-4 border-t-8-[#EAEAEA] items-center">
+    <div className="fixed left-0 bottom-0 flex border-t shadow-sm bg-white w-full justify-evenly py-4 border-t-8-[#EAEAEA] items-center dark:bg-[#1E1E1E]">
       <div>
         <NavLink to="">
           <FaHouse className="text-gray-600 text-4xl cursor-pointer hover:text-blue-400 transition delay-50 " />

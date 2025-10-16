@@ -27,9 +27,9 @@ const MusicProgress = ({ name, band, status }: MusicProgressProps) => {
   };
   const progressStatus = getProgressStatus(status);
   return (
-    <div className="bg-white p-3 rounded-2xl shadow-sm">
+    <div className="w-full bg-white dark:bg-[#1E1E1E] p-3 rounded-lg shadow-sm">
       <div className="flex justify-between">
-        <h3 className="font-bold">{name}</h3>
+        <h3 className="font-bold dark:text-white">{name}</h3>
         <Tag status={status} />
       </div>
       <h6 className="text-gray-400">{band}</h6>
