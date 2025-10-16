@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FilterBtn from "../components/buttons/FilterBtn";
 import Tab from "../components/buttons/Tab";
 import MusicProgress from "../components/music_progress/MusicProgress";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
+import { getSongs } from "../api/songs";
 
 const Songs = () => {
+  const [songs, setSongs] = useState<any[]>([]);
+  useEffect(() => {
+    async function fetchSongs() {
+      try {
+        const data = await getSongs();
+        setSongs(data);
+      } catch (error: any) {
+        console.log(error);
+      }
+    }
+    fetchSongs();
+  }, []);
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
       {/* Header */}
@@ -29,23 +42,14 @@ const Songs = () => {
 
       {/* Lista de músicas */}
       <main className="flex flex-col gap-3">
-        <MusicProgress band="The Strokes" name="Reptilia" status="LEARNING" />
-        <MusicProgress
-          band="Guns n’ Roses"
-          name="Knocking on Heaven’s Door"
-          status="LEARNING"
-        />
-        <MusicProgress band="Limp Bizkit" name="Generation" status="LEARNT" />
-        <MusicProgress
-          band="Korn"
-          name="Falling Away from Me"
-          status="PRACTICING"
-        />
-        <MusicProgress
-          band="Europe"
-          name="The Final Countdown"
-          status="WANT_TO_LEARN"
-        />
+        {songs.map((song) => (
+          <MusicProgress
+            key={song.id}
+            name={song.name}
+            band={song.band}
+            status={song.status}
+          />
+        ))}
       </main>
     </div>
   );
