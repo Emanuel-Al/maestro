@@ -39,3 +39,20 @@ export async function createSong(songData:{name:string,band:string,status:string
         console.log(e.message);
     }
 }
+
+export async function getSongById(id:number){
+    const url = `${API_URL}/songs/${id}`
+    try{
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            },
+        })
+                    console.log("Resposta: ", response);
+        const song = await response.json();
+        return song
+    }catch(e:any){
+        console.log(e.message);
+    }
+}
