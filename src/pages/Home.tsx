@@ -13,18 +13,22 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  useEffect(() => {
-    async function fetchSongs() {
-      try {
-        const data = await getSongs();
-        setSongs(data);
-      } catch (err) {
-        console.error("Erro ao buscar músicas:", err);
-      }
-    }
 
+  async function fetchSongs() {
+    try {
+      const data = await getSongs();
+      setSongs(data);
+    } catch (err) {
+      console.error("Erro ao buscar músicas:", err);
+    }
+  }
+  useEffect(() => {
     fetchSongs();
   }, []);
+
+  const handleDeleted = async () => {
+    await fetchSongs();
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center px-6 p-1.5 w-full bg-[#F8F8F8] dark:bg-[#121212]">
@@ -71,9 +75,13 @@ const Home = () => {
           {songs.map((song) => (
             <MusicProgress
               key={song.id}
+              id={song.id}
               name={song.name}
               band={song.band}
               status={song.status}
+              album={song.album}
+              tuning={song.tuning}
+              onDeleted={handleDeleted}
             />
           ))}
         </div>

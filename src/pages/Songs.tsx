@@ -7,17 +7,20 @@ import { getSongs } from "../api/songs";
 
 const Songs = () => {
   const [songs, setSongs] = useState<any[]>([]);
-  useEffect(() => {
-    async function fetchSongs() {
-      try {
-        const data = await getSongs();
-        setSongs(data);
-      } catch (error: any) {
-        console.log(error);
-      }
+  async function fetchSongs() {
+    try {
+      const data = await getSongs();
+      setSongs(data);
+    } catch (error: any) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     fetchSongs();
   }, []);
+  const handleDelete = async () => {
+    await fetchSongs();
+  };
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
       {/* Header */}
@@ -44,10 +47,14 @@ const Songs = () => {
       <main className="flex flex-col gap-3">
         {songs.map((song) => (
           <MusicProgress
+            id={song.id}
             key={song.id}
             name={song.name}
             band={song.band}
             status={song.status}
+            album={song.album}
+            tuning={song.tuning}
+            onDeleted={handleDelete}
           />
         ))}
       </main>
