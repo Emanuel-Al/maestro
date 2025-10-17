@@ -49,10 +49,24 @@ export async function getSongById(id:number){
                 "Content-type": "application/json",
             },
         })
-                    console.log("Resposta: ", response);
+        console.log("Resposta: ", response);
         const song = await response.json();
         return song
     }catch(e:any){
-        console.log(e.message);
+        console.log(e);
+    }
+}
+
+export async function deleteSong(id:number){
+    const url = `${API_URL}/songs/${id}`
+    try{
+        await fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-type": "application/json"
+            },
+        })
+    }catch(e:any){
+        console.log(e);
     }
 }
