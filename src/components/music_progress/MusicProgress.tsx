@@ -2,16 +2,10 @@ import React from "react";
 import { LinearProgress } from "@mui/material";
 import Tag from "../tag/Tag";
 import DeleteSongBtn from "../buttons/DeleteSongBtn";
+import type { SongDataInterface } from "../../interfaces/SongDataInterface";
 
-type Status = "LEARNING" | "LEARNT" | "WANT_TO_LEARN" | "PRACTICING";
-
-interface MusicProgressProps {
+interface MusicProgressProps extends SongDataInterface {
   id: number;
-  name: string;
-  band: string;
-  status: Status;
-  tuning: string;
-  album: string;
   onDeleted: () => void;
 }
 
@@ -24,7 +18,7 @@ const MusicProgress = ({
   album,
   onDeleted,
 }: MusicProgressProps) => {
-  const getProgressStatus = (status: Status) => {
+  const getProgressStatus = (status: SongDataInterface["status"]) => {
     switch (status) {
       case "WANT_TO_LEARN":
         return 0;
