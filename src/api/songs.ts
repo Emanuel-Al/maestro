@@ -1,4 +1,5 @@
 import { API_URL } from "./config";
+import type { SongDataInterface } from "../interfaces/SongDataInterface";
 
 export async function getSongs(){
     const url = `${API_URL}/songs/`
@@ -66,6 +67,22 @@ export async function deleteSong(id:number){
                 "Content-type": "application/json"
             },
         })
+    }catch(e:any){
+        console.log(e);
+    }
+}
+
+export async function updateSong(id:number,data:SongDataInterface){
+    const url = `${API_URL}/song/${id}`
+    try{
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        return response.json()
     }catch(e:any){
         console.log(e);
     }
