@@ -5,6 +5,6 @@ export interface SongDataInterface{
     band: string; 
     album: string;
     status: SongStatus;
-    description: string;
+    description?: string;
     tuning: string; 
 }
