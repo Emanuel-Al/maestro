@@ -4,12 +4,18 @@ import AddSongBtn from "../components/buttons/AddSongBtn";
 import Chart from "../components/chart/Chart";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import OverviewCard from "../components/overview_card/OverviewCard";
-import { getSongs } from "../api/songs";
+import { getSongs, getStatusCount } from "../api/songs";
 import { useState } from "react";
 import AddSongModal from "../components/modal/AddSongModal";
 
 const Home = () => {
   const [songs, setSongs] = useState<any[]>([]);
+  const [status, setStatus] = useState({
+    LEARNT: 0,
+    LEARNING: 0,
+    WANT_TO_LEARN: 0,
+    PRACTICING: 0,
+  });
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,14 +28,25 @@ const Home = () => {
       console.error("Erro ao buscar músicas:", err);
     }
   }
+
+  async function countStatus() {
+    try {
+      const data = await getStatusCount();
+      setStatus(data);
+    } catch (err) {
+      console.log("Erro ao contar status");
+    }
+  }
   useEffect(() => {
     fetchSongs();
+    countStatus();
   }, []);
 
   const handleDeleted = async () => {
     await fetchSongs();
   };
 
+  console.log(status);
   return (
     <div className="min-h-screen flex flex-col items-center px-6 p-1.5 w-full bg-[#F8F8F8] dark:bg-[#121212]">
       {/* HEADER */}
@@ -51,9 +68,10 @@ const Home = () => {
           Visão geral
         </h2>
         <div className="flex justify-start gap-4">
-          <OverviewCard count={1} status="Aprendidas" />
-          <OverviewCard count={3} status="Aprendendo" />
-          <OverviewCard count={2} status="Na fila" />
+          <OverviewCard count={status.WANT_TO_LEARN} status="Na fila" />
+          <OverviewCard count={status.LEARNING} status="Aprendendo" />
+          <OverviewCard count={status.PRACTICING} status="Praticando" />
+          <OverviewCard count={status.LEARNT} status="Aprendidas" />
         </div>
       </section>
 
