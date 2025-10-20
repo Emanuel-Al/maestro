@@ -42,8 +42,9 @@ const Home = () => {
     countStatus();
   }, []);
 
-  const handleDeleted = async () => {
+  const handleChange = async () => {
     await fetchSongs();
+    await countStatus();
   };
 
   console.log(status);
@@ -77,7 +78,12 @@ const Home = () => {
 
       {/* CHART */}
       <section className="w-full bg-white dark:bg-[#1E1E1E] mt-4 p-5 shadow-sm rounded-lg">
-        <Chart val1={2} val2={3} val3={1} val4={1} />
+        <Chart
+          val1={status.WANT_TO_LEARN}
+          val2={status.LEARNING}
+          val3={status.PRACTICING}
+          val4={status.LEARNT}
+        />
       </section>
 
       {/* SONGS */}
@@ -99,7 +105,7 @@ const Home = () => {
               status={song.status}
               album={song.album}
               tuning={song.tuning}
-              onDeleted={handleDeleted}
+              onDeleted={handleChange}
             />
           ))}
         </div>
