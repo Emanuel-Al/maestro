@@ -7,6 +7,8 @@ import { getSongs } from "../api/songs";
 
 const Songs = () => {
   const [songs, setSongs] = useState<any[]>([]);
+  const [filteredSongs, setFilteredSongs] = useState<any[]>([]);
+  const [state, setState] = useState("ALL");
   async function fetchSongs() {
     try {
       const data = await getSongs();
@@ -18,6 +20,14 @@ const Songs = () => {
   useEffect(() => {
     fetchSongs();
   }, []);
+  useEffect(() => {
+    console.log(state);
+    if (state != "ALL") {
+      setFilteredSongs(songs.filter((song) => song.status == state));
+    } else {
+      setFilteredSongs(songs);
+    }
+  }, [state, songs]);
   const handleDelete = async () => {
     await fetchSongs();
   };
@@ -36,16 +46,36 @@ const Songs = () => {
 
       {/* Tabs */}
       <section className="flex flex-wrap gap-2 font-semibold mb-8">
-        <Tab isActive={true} page="Todas" />
-        <Tab isActive={false} page="Aprendendo" />
-        <Tab isActive={false} page="Aprendidas" />
-        <Tab isActive={false} page="Praticando" />
-        <Tab isActive={false} page="Quero aprender" />
+        <Tab
+          isActive={state === "ALL"}
+          page="Todas"
+          onClick={() => setState("ALL")}
+        />
+        <Tab
+          isActive={state === "LEARNING"}
+          page="Aprendendo"
+          onClick={() => setState("LEARNING")}
+        />
+        <Tab
+          isActive={state === "LEARNT"}
+          page="Aprendidas"
+          onClick={() => setState("LEARNT")}
+        />
+        <Tab
+          isActive={state === "PRACTICING"}
+          page="Praticando"
+          onClick={() => setState("PRACTICING")}
+        />
+        <Tab
+          isActive={state === "WANT_TO_LEARN"}
+          page="Quero aprender"
+          onClick={() => setState("WANT_TO_LEARN")}
+        />
       </section>
 
       {/* Lista de músicas */}
       <main className="flex flex-col gap-3">
-        {songs.map((song) => (
+        {filteredSongs.map((song) => (
           <MusicProgress
             id={song.id}
             key={song.id}
