@@ -87,3 +87,18 @@ export async function updateSong(id:number,data:SongDataInterface){
         console.log(e);
     }
 }
+
+export async function getStatusCount(){
+    const url = `${API_URL}/songs/count`
+    try{
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            }
+        });
+        return response.json();
+    }catch(e:any){
+        console.log(e);
+    }
+}
