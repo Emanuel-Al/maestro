@@ -20,20 +20,20 @@ type AddSongModalProps = {
 
 type FormData = {
   name: string;
-  band: string;
   album: string;
-  tuning: string;
   status: SongStatus;
+  band: { name: string };
+  tuning: { name: string };
 };
 
 const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
   const isDarkMode = document.documentElement.classList.contains("dark");
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    band: "",
     album: "",
-    tuning: "",
     status: SongStatusValues.WANT_TO_LEARN,
+    band: { name: "" },
+    tuning: { name: "" },
   });
 
   const handleChange = (
@@ -42,10 +42,13 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
       | SelectChangeEvent<string>
   ) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name as string]: value,
-    }));
+    if (name == "band") {
+      setFormData((prev) => ({ ...prev, band: { name: value } }));
+    } else if (name == "tuning") {
+      setFormData((prev) => ({ ...prev, tuning: { name: value } }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,10 +58,10 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
       onClose();
       setFormData({
         name: "",
-        band: "",
         album: "",
-        tuning: "",
         status: SongStatusValues.WANT_TO_LEARN,
+        band: { name: "" },
+        tuning: { name: "" },
       });
     } catch (error) {
       console.error("Erro ao criar música:", error);
@@ -111,7 +114,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
           <TextField
             label="Artista/Banda"
             name="band"
-            value={formData.band}
+            value={formData.band.name}
             onChange={handleChange}
             variant="outlined"
             required
@@ -151,7 +154,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
           <TextField
             label="Afinação"
             name="tuning"
-            value={formData.tuning}
+            value={formData.tuning.name}
             onChange={handleChange}
             variant="outlined"
             sx={{

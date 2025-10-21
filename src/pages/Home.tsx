@@ -101,10 +101,10 @@ const Home = () => {
               key={song.id}
               id={song.id}
               name={song.name}
-              band={song.band}
+              band={song.band.name}
               status={song.status}
               album={song.album}
-              tuning={song.tuning}
+              tuning={song.tuning.name}
               onDeleted={handleChange}
             />
           ))}

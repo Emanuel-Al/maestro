@@ -21,7 +21,7 @@ export async function getSongs(){
     }
 }
 
-export async function createSong(songData:{name:string,band:string,status:string}){
+export async function createSong(songData:SongDataInterface){
     const url = `${API_URL}/songs/`
     try{
         const response = await fetch(url, {

@@ -4,11 +4,15 @@ import Tab from "../components/buttons/Tab";
 import MusicProgress from "../components/music_progress/MusicProgress";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import { getSongs } from "../api/songs";
+import RemoveSongModal from "../components/modal/RemoveSongModal";
+import FilterSongModal from "../components/modal/FilterSongModal";
 
 const Songs = () => {
   const [songs, setSongs] = useState<any[]>([]);
   const [filteredSongs, setFilteredSongs] = useState<any[]>([]);
   const [state, setState] = useState("ALL");
+  const [open, setOpen] = useState(false);
+
   async function fetchSongs() {
     try {
       const data = await getSongs();
@@ -17,9 +21,11 @@ const Songs = () => {
       console.log(error);
     }
   }
+
   useEffect(() => {
     fetchSongs();
   }, []);
+
   useEffect(() => {
     console.log(state);
     if (state != "ALL") {
@@ -28,9 +34,11 @@ const Songs = () => {
       setFilteredSongs(songs);
     }
   }, [state, songs]);
+
   const handleDelete = async () => {
     await fetchSongs();
   };
+
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
       {/* Header */}
@@ -39,10 +47,14 @@ const Songs = () => {
           Minhas Músicas
         </h1>
         <div className="flex gap-10">
-          <FilterBtn />
+          <FilterBtn handleClick={() => setOpen(true)} />
           <DarkModeBtn />
         </div>
       </header>
+
+      <section>
+        <FilterSongModal open={open} onClose={() => setOpen(false)} />
+      </section>
 
       {/* Tabs */}
       <section className="flex flex-wrap gap-2 font-semibold mb-8">
@@ -80,10 +92,10 @@ const Songs = () => {
             id={song.id}
             key={song.id}
             name={song.name}
-            band={song.band}
+            band={song.band.name}
             status={song.status}
             album={song.album}
-            tuning={song.tuning}
+            tuning={song.tuning.name}
             onDeleted={handleDelete}
           />
         ))}
