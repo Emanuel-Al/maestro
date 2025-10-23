@@ -3,9 +3,10 @@ import React from "react";
 type formBtnProps = {
   type: "submit" | "button";
   handleClick?: () => void;
+  children?: React.ReactNode;
 };
 
-const FormBtn = ({ type, handleClick }: formBtnProps) => {
+const FormBtn = ({ type, handleClick, children }: formBtnProps) => {
   return (
     <div>
       <button
@@ -17,7 +18,7 @@ const FormBtn = ({ type, handleClick }: formBtnProps) => {
             : "bg-[#4B5563] text-white p-2 cursor-pointer font-semibold rounded-lg"
         }
       >
-        {type == "submit" ? "Adicionar Música" : "Cancelar"}
+        {children}
       </button>
     </div>
   );

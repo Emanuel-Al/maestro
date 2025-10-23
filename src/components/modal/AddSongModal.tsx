@@ -233,8 +233,10 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
           </FormControl>
 
           <div className="flex justify-end gap-4">
-            <FormBtn type="button" handleClick={onClose} />
-            <FormBtn type="submit" />
+            <FormBtn type="button" handleClick={onClose}>
+              Cancelar
+            </FormBtn>
+            <FormBtn type="submit">Salvar Música</FormBtn>
           </div>
         </form>
       </Box>
