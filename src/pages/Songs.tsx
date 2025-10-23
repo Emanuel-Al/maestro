@@ -10,6 +10,10 @@ import FilterSongModal from "../components/modal/FilterSongModal";
 const Songs = () => {
   const [songs, setSongs] = useState<any[]>([]);
   const [filteredSongs, setFilteredSongs] = useState<any[]>([]);
+  const [applyFilters, setApplyFilters] = useState({
+    band: "ALL",
+    tuning: "ALL",
+  });
   const [state, setState] = useState("ALL");
   const [open, setOpen] = useState(false);
 
@@ -27,17 +31,27 @@ const Songs = () => {
   }, []);
 
   useEffect(() => {
-    console.log(state);
+    let filtered = songs;
     if (state != "ALL") {
-      setFilteredSongs(songs.filter((song) => song.status == state));
-    } else {
-      setFilteredSongs(songs);
+      filtered = filtered.filter((song) => song.status == state);
     }
-  }, [state, songs]);
+    if (applyFilters.band != "ALL") {
+      filtered = filtered.filter((song) => song.band.name == applyFilters.band);
+    }
+    if (applyFilters.tuning != "ALL") {
+      filtered = filtered.filter(
+        (song) => song.tuning.name == applyFilters.tuning
+      );
+    }
+
+    setFilteredSongs(filtered);
+  }, [state, songs, applyFilters]);
 
   const handleDelete = async () => {
     await fetchSongs();
   };
+
+  const handleClose = () => setOpen(false);
 
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
@@ -53,7 +67,11 @@ const Songs = () => {
       </header>
 
       <section>
-        <FilterSongModal open={open} onClose={() => setOpen(false)} />
+        <FilterSongModal
+          open={open}
+          onClose={handleClose}
+          setApplyFilters={setApplyFilters}
+        />
       </section>
 
       {/* Tabs */}
@@ -92,10 +110,10 @@ const Songs = () => {
             id={song.id}
             key={song.id}
             name={song.name}
-            band={song.band.name}
+            band={song.band?.name}
             status={song.status}
             album={song.album}
-            tuning={song.tuning.name}
+            tuning={song.tuning?.name}
             onDeleted={handleDelete}
           />
         ))}
