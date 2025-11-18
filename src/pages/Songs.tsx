@@ -66,13 +66,17 @@ const Songs = () => {
         </div>
       </header>
 
-      <section>
-        <FilterSongModal
-          open={open}
-          onClose={handleClose}
-          setApplyFilters={setApplyFilters}
-        />
-      </section>
+      {open && (
+        <section>
+          <FilterSongModal
+            open={open}
+            onClose={handleClose}
+            setApplyFilters={setApplyFilters}
+            selectedBand={applyFilters.band}
+            selectedTuning={applyFilters.tuning}
+          />
+        </section>
+      )}
 
       {/* Tabs */}
       <section className="flex flex-wrap gap-2 font-semibold mb-8">
@@ -113,7 +117,7 @@ const Songs = () => {
             band={song.band?.name}
             status={song.status}
             album={song.album}
-            tuning={song.tuning?.name}
+            tuning={song.tuning}
             onDeleted={handleDelete}
           />
         ))}

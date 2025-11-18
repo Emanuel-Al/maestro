@@ -18,6 +18,8 @@ import FormBtn from "../buttons/FormBtn";
 type FilterSongModalProps = {
   open: boolean;
   onClose: () => void;
+  selectedBand: string;
+  selectedTuning: string;
   setApplyFilters: React.Dispatch<
     React.SetStateAction<{ band: string; tuning: string }>
   >;
@@ -27,12 +29,14 @@ const FilterSongModal = ({
   open,
   onClose,
   setApplyFilters,
+  selectedBand,
+  selectedTuning,
 }: FilterSongModalProps) => {
   const [bandOptions, setBandOptions] = useState<string[]>([]);
   const [tuningOptions, setTuningOptions] = useState<string[]>([]);
   const [formData, setFormData] = useState<{ band: string; tuning: string }>({
-    band: "ALL",
-    tuning: "ALL",
+    band: selectedBand,
+    tuning: selectedTuning,
   });
 
   useEffect(() => {
