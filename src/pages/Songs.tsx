@@ -6,6 +6,7 @@ import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import { getSongs } from "../api/songs";
 import RemoveSongModal from "../components/modal/RemoveSongModal";
 import FilterSongModal from "../components/modal/FilterSongModal";
+import NoSongs from "../components/noSongs/NoSongs";
 
 const Songs = () => {
   const [songs, setSongs] = useState<any[]>([]);
@@ -55,73 +56,81 @@ const Songs = () => {
 
   return (
     <div className="min-h-screen flex flex-col px-6 py-4">
-      {/* Header */}
-      <header className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Minhas Músicas
-        </h1>
-        <div className="flex gap-10">
-          <FilterBtn handleClick={() => setOpen(true)} />
-          <DarkModeBtn />
+      {songs.length == 0 ? (
+        <div className=" min-h-screen flex flex-col justify-center items-center">
+          <NoSongs />
         </div>
-      </header>
+      ) : (
+        <div>
+          {/* Header */}
+          <header className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Minhas Músicas
+            </h1>
+            <div className="flex gap-10">
+              <FilterBtn handleClick={() => setOpen(true)} />
+              <DarkModeBtn />
+            </div>
+          </header>
 
-      {open && (
-        <section>
-          <FilterSongModal
-            open={open}
-            onClose={handleClose}
-            setApplyFilters={setApplyFilters}
-            selectedBand={applyFilters.band}
-            selectedTuning={applyFilters.tuning}
-          />
-        </section>
+          {open && (
+            <section>
+              <FilterSongModal
+                open={open}
+                onClose={handleClose}
+                setApplyFilters={setApplyFilters}
+                selectedBand={applyFilters.band}
+                selectedTuning={applyFilters.tuning}
+              />
+            </section>
+          )}
+
+          {/* Tabs */}
+          <section className="flex flex-wrap gap-2 font-semibold mb-8">
+            <Tab
+              isActive={state === "ALL"}
+              page="Todas"
+              onClick={() => setState("ALL")}
+            />
+            <Tab
+              isActive={state === "LEARNING"}
+              page="Aprendendo"
+              onClick={() => setState("LEARNING")}
+            />
+            <Tab
+              isActive={state === "LEARNT"}
+              page="Aprendidas"
+              onClick={() => setState("LEARNT")}
+            />
+            <Tab
+              isActive={state === "PRACTICING"}
+              page="Praticando"
+              onClick={() => setState("PRACTICING")}
+            />
+            <Tab
+              isActive={state === "WANT_TO_LEARN"}
+              page="Quero aprender"
+              onClick={() => setState("WANT_TO_LEARN")}
+            />
+          </section>
+
+          {/* Lista de músicas */}
+          <main className="flex flex-col gap-3">
+            {filteredSongs.map((song) => (
+              <MusicProgress
+                id={song.id}
+                key={song.id}
+                name={song.name}
+                band={song.band?.name}
+                status={song.status}
+                album={song.album}
+                tuning={song.tuning}
+                onDeleted={handleDelete}
+              />
+            ))}
+          </main>
+        </div>
       )}
-
-      {/* Tabs */}
-      <section className="flex flex-wrap gap-2 font-semibold mb-8">
-        <Tab
-          isActive={state === "ALL"}
-          page="Todas"
-          onClick={() => setState("ALL")}
-        />
-        <Tab
-          isActive={state === "LEARNING"}
-          page="Aprendendo"
-          onClick={() => setState("LEARNING")}
-        />
-        <Tab
-          isActive={state === "LEARNT"}
-          page="Aprendidas"
-          onClick={() => setState("LEARNT")}
-        />
-        <Tab
-          isActive={state === "PRACTICING"}
-          page="Praticando"
-          onClick={() => setState("PRACTICING")}
-        />
-        <Tab
-          isActive={state === "WANT_TO_LEARN"}
-          page="Quero aprender"
-          onClick={() => setState("WANT_TO_LEARN")}
-        />
-      </section>
-
-      {/* Lista de músicas */}
-      <main className="flex flex-col gap-3">
-        {filteredSongs.map((song) => (
-          <MusicProgress
-            id={song.id}
-            key={song.id}
-            name={song.name}
-            band={song.band?.name}
-            status={song.status}
-            album={song.album}
-            tuning={song.tuning}
-            onDeleted={handleDelete}
-          />
-        ))}
-      </main>
     </div>
   );
 };
