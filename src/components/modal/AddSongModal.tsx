@@ -28,6 +28,10 @@ type FormData = {
 
 const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
   const isDarkMode = document.documentElement.classList.contains("dark");
+
+  const bgColor = isDarkMode ? "#121212" : "#FFFFFF";
+  const textColor = isDarkMode ? "#fff" : "#111827";
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     album: "",
@@ -35,6 +39,26 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
     band: { name: "" },
     tuning: { name: "" },
   });
+
+  const commonTextFieldSx = {
+    input: { color: textColor },
+    label: { color: isDarkMode ? "#E5E7EB" : "#6B7280" },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
+      },
+      "&:hover fieldset": {
+        borderColor: isDarkMode ? "#9CA3AF" : "#9CA3AF",
+      },
+      "& .MuiInputBase-input:-webkit-autofill": {
+        WebkitBoxShadow: `0 0 0 100px ${bgColor} inset`,
+        WebkitTextFillColor: textColor,
+        transition: "background-color 5000s ease-in-out 0s",
+        caretColor: textColor,
+        borderRadius: "inherit",
+      },
+    },
+  };
 
   const handleChange = (
     event:
@@ -53,7 +77,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
-      const song = await createSong(formData);
+      await createSong(formData);
       console.log("Música criada com sucesso");
       onClose();
       setFormData({
@@ -76,7 +100,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          bgcolor: isDarkMode ? "#121212" : "#FFFFFF",
+          bgcolor: bgColor,
           color: isDarkMode ? "#FFF" : "#111827",
           boxShadow: 24,
           p: 4,
@@ -98,18 +122,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{
-              input: { color: isDarkMode ? "#fff" : "#111827" },
-              label: { color: isDarkMode ? "#E5E7EB" : "#6B7280" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
-                },
-                "&:hover fieldset": {
-                  borderColor: isDarkMode ? "#9CA3AF" : "#9CA3AF",
-                },
-              },
-            }}
+            sx={commonTextFieldSx}
           />
           <TextField
             label="Artista/Banda"
@@ -118,18 +131,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{
-              input: { color: isDarkMode ? "#fff" : "#111827" },
-              label: { color: isDarkMode ? "#E5E7EB" : "#6B7280" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
-                },
-                "&:hover fieldset": {
-                  borderColor: isDarkMode ? "#9CA3AF" : "#9CA3AF",
-                },
-              },
-            }}
+            sx={commonTextFieldSx}
           />
           <TextField
             label="Álbum"
@@ -138,18 +140,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{
-              input: { color: isDarkMode ? "#fff" : "#111827" },
-              label: { color: isDarkMode ? "#E5E7EB" : "#6B7280" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
-                },
-                "&:hover fieldset": {
-                  borderColor: isDarkMode ? "#9CA3AF" : "#9CA3AF",
-                },
-              },
-            }}
+            sx={commonTextFieldSx}
           />
           <TextField
             label="Afinação"
@@ -157,18 +148,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
             value={formData.tuning.name}
             onChange={handleChange}
             variant="outlined"
-            sx={{
-              input: { color: isDarkMode ? "#fff" : "#111827" },
-              label: { color: isDarkMode ? "#E5E7EB" : "#6B7280" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
-                },
-                "&:hover fieldset": {
-                  borderColor: isDarkMode ? "#9CA3AF" : "#9CA3AF",
-                },
-              },
-            }}
+            sx={commonTextFieldSx}
           />
 
           <FormControl fullWidth>
@@ -187,7 +167,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
               onChange={handleChange}
               required
               sx={{
-                color: isDarkMode ? "#fff" : "#111827",
+                color: textColor,
                 "& .MuiOutlinedInput-notchedOutline": {
                   borderColor: isDarkMode ? "#6B7280" : "#D1D5DB",
                 },
