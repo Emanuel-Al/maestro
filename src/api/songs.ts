@@ -73,7 +73,7 @@ export async function deleteSong(id:number){
 }
 
 export async function updateSong(id:number,data:SongDataInterface){
-    const url = `${API_URL}/song/${id}`
+    const url = `${API_URL}/songs/${id}`
     try{
         const response = await fetch(url, {
             method: "PUT",
