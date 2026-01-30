@@ -3,6 +3,7 @@ import { LinearProgress } from "@mui/material";
 import Tag from "../tag/Tag";
 import DeleteSongBtn from "../buttons/DeleteSongBtn";
 import type { SongDataInterface } from "../../interfaces/SongDataInterface";
+import { useNavigate } from "react-router";
 
 interface MusicProgressProps extends SongDataInterface {
   id: number;
@@ -33,19 +34,26 @@ const MusicProgress = ({
     }
   };
   const progressStatus = getProgressStatus(status);
+  let navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/songs/${id}`);
+  };
   return (
-    <div className="w-full bg-white dark:bg-[#1E1E1E] p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+    <div
+      onClick={handleClick}
+      className="w-full bg-white dark:bg-[#1E1E1E] p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+    >
       <div className="flex justify-between items-start">
         <div className="flex flex-col gap-1">
           <h3 className="font-bold dark:text-white">{name}</h3>
-          <h6 className="text-gray-400">{band}</h6>
+          <h6 className="text-gray-400">{band?.name}</h6>
           <div className="flex items-center gap-3 mt-1 text-gray-500 dark:text-gray-400 text-sm">
             <span className="px-2 py-0.5 border border-gray-300 dark:border-gray-600 rounded-md">
               {album}
             </span>
             <span>|</span>
             <span className="px-2 py-0.5 border border-gray-300 dark:border-gray-600 rounded-md">
-              {tuning}
+              {tuning?.name}
             </span>
           </div>
         </div>
