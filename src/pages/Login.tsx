@@ -2,9 +2,11 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FcMusic } from "react-icons/fc";
 import { authUser } from "../api/auth";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: { target: { value: string } }) => {
     setFormData({
@@ -23,8 +25,10 @@ const Login = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const response = await authUser(formData);
-    if (response.ok) {
+    console.log(response.ok);
+    if (response.token) {
       localStorage.setItem("token", response.token);
+      navigate("/home");
     }
   };
   return (
