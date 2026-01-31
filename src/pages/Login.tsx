@@ -1,9 +1,32 @@
-import React from "react";
+import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FcMusic } from "react-icons/fc";
-import { MdLibraryMusic } from "react-icons/md";
+import { authUser } from "../api/auth";
 
 const Login = () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const handleEmailChange = (e: { target: { value: string } }) => {
+    setFormData({
+      email: e.target.value,
+      password: formData.password,
+    });
+  };
+
+  const handlePasswordChange = (e: { target: { value: string } }) => {
+    setFormData({
+      email: formData.email,
+      password: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const response = await authUser(formData);
+    if (response.ok) {
+      localStorage.setItem("token", response.token);
+    }
+  };
   return (
     <div className="md:flex min-h-screen w-screen">
       <div className="bg-[#06080E] w-screen p-12 flex flex-col gap-50 ">
@@ -29,7 +52,7 @@ const Login = () => {
               Acesse seu repertorio e gerencie suas músicas
             </p>
           </div>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4 max-w-2/3">
               <div className="">
                 <label htmlFor="email">E-mail</label>
@@ -39,6 +62,7 @@ const Login = () => {
                   name="email"
                   placeholder="email@example.com"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={handleEmailChange}
                 />
               </div>
               <div>
@@ -49,13 +73,22 @@ const Login = () => {
                   id="password"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={handlePasswordChange}
                 />
               </div>
-              <button className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center">
+
+              <button
+                type="submit"
+                className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center"
+              >
                 Entrar no Maestro <FaArrowRight />
               </button>
             </div>
           </form>
+          <h3>
+            Ainda não tem uma conta ?{" "}
+            <a href="/register">cadastre-se gratuitamente</a>
+          </h3>
         </div>
       </div>
     </div>

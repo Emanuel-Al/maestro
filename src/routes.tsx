@@ -5,11 +5,13 @@ import Songs from "./pages/Songs";
 import Layout from "./components/layouts/Layout";
 import SongInfo from "./pages/SongInfo";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 const RouterProvider = () => {
   return (
     <BrowserRouter basename="/">
       <Routes>
         <Route index element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="/" element={<Layout />}>
           <Route path="home" element={<Home />} />
           <Route path="songs" element={<Songs />} />
