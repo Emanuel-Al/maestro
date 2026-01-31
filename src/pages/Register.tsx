@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FcMusic } from "react-icons/fc";
+import { createUser } from "../api/auth";
 
 const Register = () => {
+  interface formDataProps {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSubmit = (e: any) => {
+    console.log(formData);
+    createUser(formData);
+    e.preventDefault();
+  };
   return (
     <div className="md:flex min-h-screen w-screen">
       <div className="bg-[#06080E] w-screen p-12 flex flex-col gap-50 ">
@@ -28,7 +48,7 @@ const Register = () => {
               Preencha os dados abaixo para começar.
             </p>
           </div>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4 max-w-2/3">
               <div>
                 <label htmlFor="name">Nome</label>
@@ -38,6 +58,9 @@ const Register = () => {
                   name="name"
                   placeholder="Seu nome"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                 />
               </div>
               <div className="">
@@ -48,6 +71,9 @@ const Register = () => {
                   name="email"
                   placeholder="email@example.com"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -58,6 +84,9 @@ const Register = () => {
                   id="password"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -68,9 +97,18 @@ const Register = () => {
                   id="RepeatPassword"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                 />
               </div>
-              <button className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center">
+              <button
+                type="submit"
+                className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center"
+              >
                 Criar conta <FaArrowRight />
               </button>
             </div>

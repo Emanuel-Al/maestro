@@ -5,6 +5,12 @@ interface loginForm {
   password: string;
 }
 
+interface registerData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export async function authUser(loginData: loginForm) {
   const url = `${API_URL}/user/auth/`;
   try {
@@ -19,6 +25,26 @@ export async function authUser(loginData: loginForm) {
     if (!response.ok) {
       throw new Error("Erro autenticando usuário");
     }
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function createUser(registerData: registerData) {
+  const url = `${API_URL}/user/`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(registerData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro criando usuário");
+    }
+
     const data = await response.json();
     return data;
   } catch (e) {
