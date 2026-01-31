@@ -4,13 +4,6 @@ import { FcMusic } from "react-icons/fc";
 import { createUser } from "../api/auth";
 
 const Register = () => {
-  interface formDataProps {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
