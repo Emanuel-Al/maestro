@@ -1,21 +1,44 @@
-import React, { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FcMusic } from "react-icons/fc";
 import { createUser } from "../api/auth";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const schema = z.object({
+    name: z
+      .string("Nome é necessário")
+      .max(99, "O nome não pode ultrapassar 99 caracteres"),
+    nickname: z
+      .string("nickname é obrigatório")
+      .min(4, "O nickname deve ter ao menos 4 caractéres")
+      .max(14, "O nickname deve ter no máximo 14 carácteres"),
+    email: z.email("Insira um email válido"),
+    password: z
+      .string()
+      .min(6, "A senha deve ter no mínimo 6 caractéres")
+      .max(25, "A senha deve ter no máximo 25 carácteres"),
+    confirmPassword: z.string("Confirme a senha"),
   });
 
-  const handleSubmit = (e: any) => {
-    console.log(formData);
-    createUser(formData);
-    e.preventDefault();
+  type formDataType = z.infer<typeof schema>;
+
+  const onSubmit = async (data: formDataType) => {
+    try {
+      await createUser(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<formDataType>({
+    resolver: zodResolver(schema),
+  });
   return (
     <div className="md:flex min-h-screen w-screen">
       <div className="bg-[#06080E] w-screen p-12 flex flex-col gap-50 ">
@@ -41,66 +64,87 @@ const Register = () => {
               Preencha os dados abaixo para começar.
             </p>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4 max-w-2/3">
               <div>
                 <label htmlFor="name">Nome</label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
                   placeholder="Seu nome"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  {...register("name")}
                 />
+                {errors.name && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.name.message}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label htmlFor="nickName">Nickname</label>
+                <input
+                  type="text"
+                  id="nickname"
+                  placeholder="Seu nickName"
+                  className="w-full rounded-xl border border-gray-500 p-3"
+                  {...register("nickname")}
+                />
+                {errors.nickname && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.nickname.message}
+                  </span>
+                )}
               </div>
               <div className="">
                 <label htmlFor="email">E-mail</label>
                 <input
                   type="email"
                   id="email"
-                  name="email"
                   placeholder="email@example.com"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label htmlFor="password">Senha</label>
                 <input
                   type="password"
-                  name="password"
                   id="password"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label htmlFor="password">Confirmar Senha</label>
                 <input
-                  type="RepeatPassword"
-                  name="RepeatPassword"
-                  id="RepeatPassword"
+                  type="text"
+                  id="confirmPassword"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      confirmPassword: e.target.value,
-                    })
-                  }
+                  {...register("confirmPassword")}
                 />
+                {errors.confirmPassword && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
               </div>
               <button
                 type="submit"
                 className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center"
+                disabled={isSubmitting}
               >
                 Criar conta <FaArrowRight />
               </button>

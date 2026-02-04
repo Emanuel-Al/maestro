@@ -3,32 +3,40 @@ import { FaArrowRight } from "react-icons/fa6";
 import { FcMusic } from "react-icons/fc";
 import { authUser } from "../api/auth";
 import { useNavigate } from "react-router";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const schema = z.object({
+    email: z.email("O formato de email é inválido"),
+    password: z
+      .string()
+      .min(4, "A senha deve conter no mínimo 6 caracteres")
+      .max(25, "A senha deve ter no máximo 25 caractéres"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormSchema>({
+    resolver: zodResolver(schema),
+  });
+
+  type LoginFormSchema = z.infer<typeof schema>;
+
   const navigate = useNavigate();
 
-  const handleEmailChange = (e: { target: { value: string } }) => {
-    setFormData({
-      email: e.target.value,
-      password: formData.password,
-    });
-  };
-
-  const handlePasswordChange = (e: { target: { value: string } }) => {
-    setFormData({
-      email: formData.email,
-      password: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    const response = await authUser(formData);
-    console.log(response.ok);
-    if (response.token) {
-      localStorage.setItem("token", response.token);
-      navigate("/home");
+  const onSubmit = async (data: LoginFormSchema) => {
+    try {
+      const response = await authUser(data);
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+        navigate("/home");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   return (
@@ -56,34 +64,43 @@ const Login = () => {
               Acesse seu repertorio e gerencie suas músicas
             </p>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4 max-w-2/3">
               <div className="">
                 <label htmlFor="email">E-mail</label>
                 <input
                   type="email"
                   id="email"
-                  name="email"
                   placeholder="email@example.com"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={handleEmailChange}
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
-                  name="password"
                   id="password"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
-                  onChange={handlePasswordChange}
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
 
               <button
                 type="submit"
                 className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center"
+                disabled={isSubmitting}
               >
                 Entrar no Maestro <FaArrowRight />
               </button>
