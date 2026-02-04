@@ -8,6 +8,7 @@ import { getSongs, getStatusCount } from "../api/songs";
 import { useState } from "react";
 import AddSongModal from "../components/modal/AddSongModal";
 import NoSongs from "../components/noSongs/NoSongs";
+import LogoutBtn from "../components/buttons/LogoutBtn";
 
 const Home = () => {
   const [songs, setSongs] = useState<any[]>([]);
@@ -69,6 +70,7 @@ const Home = () => {
             </div>
             <div className="p-1 flex items-center">
               <DarkModeBtn />
+              <LogoutBtn />
             </div>
           </header>
 
@@ -112,7 +114,7 @@ const Home = () => {
                   key={song.id}
                   id={song.id}
                   name={song.name}
-                  band={song.band?.name}
+                  band={song.band}
                   status={song.status}
                   album={song.album}
                   tuning={song.tuning}

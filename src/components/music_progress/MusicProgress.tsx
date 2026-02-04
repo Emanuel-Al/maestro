@@ -40,8 +40,8 @@ const MusicProgress = ({
   };
   return (
     <div
-      onClick={handleClick}
       className="w-full bg-white dark:bg-[#1E1E1E] p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+      onClick={handleClick}
     >
       <div className="flex justify-between items-start">
         <div className="flex flex-col gap-1">
@@ -57,7 +57,10 @@ const MusicProgress = ({
             </span>
           </div>
         </div>
-        <div className="flex gap-4 items-center">
+        <div
+          className="flex gap-4 items-center"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Tag status={status} />
           <DeleteSongBtn id={id} name={name} onDeleted={onDeleted} />
         </div>
