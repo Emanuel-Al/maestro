@@ -13,11 +13,13 @@ import {
 import Textarea from "@mui/joy/Textarea";
 import FormBtn from "../components/buttons/FormBtn";
 import { SongStatusValues, type SongStatus } from "../enums/SongStatus";
+import { useNavigate } from "react-router";
 
 const SongInfo = () => {
   const isDarkMode = document.documentElement.classList.contains("dark");
   const { id } = useParams();
   const songId = Number(id);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<any>(null);
 
@@ -37,7 +39,7 @@ const SongInfo = () => {
   }, [songId]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -86,15 +88,21 @@ const SongInfo = () => {
 
   return (
     <form className="p-6" onSubmit={handleSubmit}>
-      <header className="flex gap-5 items-center">
-        <button type="button">
+      <header className="flex gap-5 items-center dark:text-white">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="cursor-pointer"
+        >
           <IoChevronBack size={25} />
         </button>
 
-        <h1 className="text-3xl font-bold mb-4">{formData.name}</h1>
+        <h1 className="text-3xl font-bold mb-4 dark:text-white">
+          {formData.name}
+        </h1>
       </header>
 
-      <main className="bg-white p-5">
+      <main className="bg-white p-5 dark:bg-[#1E1E1E]">
         <div className="space-y-3">
           {/* SONG */}
           <InputLabel sx={{ color: isDarkMode ? "#fff" : "#6B7280" }}>
@@ -193,10 +201,10 @@ const SongInfo = () => {
                 {status === "WANT_TO_LEARN"
                   ? "Quero aprender"
                   : status === "LEARNING"
-                  ? "Aprendendo"
-                  : status === "PRACTICING"
-                  ? "Praticando"
-                  : "Aprendido"}
+                    ? "Aprendendo"
+                    : status === "PRACTICING"
+                      ? "Praticando"
+                      : "Aprendido"}
               </MenuItem>
             ))}
           </Select>
@@ -207,6 +215,7 @@ const SongInfo = () => {
           Anotações
         </InputLabel>
         <Textarea
+          sx={{ background: isDarkMode ? "#1E1E1E" : "#fff" }}
           name="description"
           minRows={4}
           value={formData.description}

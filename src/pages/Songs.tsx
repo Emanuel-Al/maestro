@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FilterBtn from "../components/buttons/FilterBtn";
 import Tab from "../components/buttons/Tab";
 import MusicProgress from "../components/music_progress/MusicProgress";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import { getSongs } from "../api/songs";
-import RemoveSongModal from "../components/modal/RemoveSongModal";
 import FilterSongModal from "../components/modal/FilterSongModal";
 import NoSongs from "../components/noSongs/NoSongs";
 
@@ -41,7 +40,7 @@ const Songs = () => {
     }
     if (applyFilters.tuning != "ALL") {
       filtered = filtered.filter(
-        (song) => song.tuning.name == applyFilters.tuning
+        (song) => song.tuning.name == applyFilters.tuning,
       );
     }
 
@@ -55,7 +54,7 @@ const Songs = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="min-h-screen flex flex-col px-6 py-4">
+    <div className="min-h-screen flex flex-col px-6 py-6">
       {songs.length == 0 ? (
         <div className=" min-h-screen flex flex-col justify-center items-center">
           <NoSongs />
