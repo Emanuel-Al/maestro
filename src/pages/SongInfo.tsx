@@ -215,7 +215,10 @@ const SongInfo = () => {
           Anotações
         </InputLabel>
         <Textarea
-          sx={{ background: isDarkMode ? "#1E1E1E" : "#fff" }}
+          sx={{
+            background: isDarkMode ? "#1E1E1E" : "#fff",
+            color: isDarkMode ? "#fff" : "000",
+          }}
           name="description"
           minRows={4}
           value={formData.description}

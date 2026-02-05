@@ -22,50 +22,56 @@ const Register = () => {
     confirmPassword: z.string("Confirme a senha"),
   });
 
-  type formDataType = z.infer<typeof schema>;
+  type FormDataType = z.infer<typeof schema>;
 
-  const onSubmit = async (data: formDataType) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormDataType>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = async (data: FormDataType) => {
     try {
+      if (data.password != data.confirmPassword) {
+      }
       await createUser(data);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<formDataType>({
-    resolver: zodResolver(schema),
-  });
   return (
-    <div className="md:flex min-h-screen w-screen">
-      <div className="bg-[#06080E] w-screen p-12 flex flex-col gap-50 ">
-        <div className="flex gap-2">
+    <div className="min-h-screen w-full md:flex overflow-x-hidden">
+      <div className="bg-[#06080E] w-full md:1/2 p-12 flex flex-col gap-50 ">
+        <div className="flex gap-2 items-center">
           <FcMusic size={25} />
-          <h3 className="text-white font-bold text-xl"> MAESTRO APP</h3>
+          <h3 className="text-white font-bold text-xl">MAESTRO APP</h3>
         </div>
-        <div className="flex flex-col gap-8">
-          <h1 className="text-white text-6xl font-bold w-lg">
+
+        <div className="flex flex-col gap-6">
+          <h1 className="text-white text-3xl md:text-6xl font-bold max-w-xl">
             Comece sua jornada musical.
           </h1>
-          <p className="text-white text-xl w-lg">
+          <p className="text-white text-base md:text-xl max-w-xl">
             Junte-se a outros músicos e organize seu repertório de forma simples
             e intuitiva.
           </p>
         </div>
       </div>
-      <div className="bg-[#fff] w-screen">
-        <div className="p-20">
-          <div className="mb-10">
-            <h1 className="text-4xl font-bold">Criar uma conta</h1>
+
+      <div className="bg-[#fff] w-full md:1/2 flex items-center justify-center">
+        <div className="w-full max-w-md px-6 py-10 md:p-10">
+          <div className="mb-8">
+            <h1 className="text-2xl md:text-4xl font-bold">Criar uma conta</h1>
             <p className="text-gray-500">
               Preencha os dados abaixo para começar.
             </p>
           </div>
+
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-4 max-w-2/3">
+            <div className="flex flex-col gap-4">
               <div>
                 <label htmlFor="name">Nome</label>
                 <input
@@ -76,27 +82,29 @@ const Register = () => {
                   {...register("name")}
                 />
                 {errors.name && (
-                  <span className="text-red-500 text-sm mt-1">
+                  <span className="text-red-500 text-sm">
                     {errors.name.message}
                   </span>
                 )}
               </div>
+
               <div>
-                <label htmlFor="nickName">Nickname</label>
+                <label htmlFor="nickname">Nickname</label>
                 <input
                   type="text"
                   id="nickname"
-                  placeholder="Seu nickName"
+                  placeholder="Seu nickname"
                   className="w-full rounded-xl border border-gray-500 p-3"
                   {...register("nickname")}
                 />
                 {errors.nickname && (
-                  <span className="text-red-500 text-sm mt-1">
+                  <span className="text-red-500 text-sm">
                     {errors.nickname.message}
                   </span>
                 )}
               </div>
-              <div className="">
+
+              <div>
                 <label htmlFor="email">E-mail</label>
                 <input
                   type="email"
@@ -106,11 +114,12 @@ const Register = () => {
                   {...register("email")}
                 />
                 {errors.email && (
-                  <span className="text-red-500 text-sm mt-1">
+                  <span className="text-red-500 text-sm">
                     {errors.email.message}
                   </span>
                 )}
               </div>
+
               <div>
                 <label htmlFor="password">Senha</label>
                 <input
@@ -121,37 +130,43 @@ const Register = () => {
                   {...register("password")}
                 />
                 {errors.password && (
-                  <span className="text-red-500 text-sm mt-1">
+                  <span className="text-red-500 text-sm">
                     {errors.password.message}
                   </span>
                 )}
               </div>
+
               <div>
-                <label htmlFor="password">Confirmar Senha</label>
+                <label htmlFor="confirmPassword">Confirmar Senha</label>
                 <input
-                  type="text"
+                  type="password"
                   id="confirmPassword"
                   placeholder="......"
                   className="w-full rounded-xl border border-gray-500 p-3"
                   {...register("confirmPassword")}
                 />
                 {errors.confirmPassword && (
-                  <span className="text-red-500 text-sm mt-1">
+                  <span className="text-red-500 text-sm">
                     {errors.confirmPassword.message}
                   </span>
                 )}
               </div>
+
               <button
                 type="submit"
-                className=" text-white font-bold bg-[#030407] p-3 rounded-xl cursor-pointer hover:transition 0.6s hover:opacity-60 flex justify-center"
+                className="text-white font-bold bg-[#030407] p-3 rounded-xl flex justify-center items-center gap-2 hover:opacity-60 transition"
                 disabled={isSubmitting}
               >
                 Criar conta <FaArrowRight />
               </button>
             </div>
           </form>
-          <h3>
-            Já tem uma conta ? <a href="/">faça login</a>
+
+          <h3 className="mt-6 text-sm">
+            Já tem uma conta?{" "}
+            <a href="/" className="underline text-blue-600 font-bold">
+              faça login
+            </a>
           </h3>
         </div>
       </div>

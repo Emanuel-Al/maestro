@@ -68,7 +68,7 @@ const Home = () => {
                 Aqui está o resumo do seu progresso
               </p>
             </div>
-            <div className="p-1 flex items-center">
+            <div className="p-1 flex items-center gap-3">
               <DarkModeBtn />
               <LogoutBtn />
             </div>

@@ -17,7 +17,7 @@ const LogoutBtn = () => {
       }
       onClick={handleLogout}
     >
-      <IoIosLogOut size={25} />
+      <IoIosLogOut size={30} />
     </button>
   );
 };
