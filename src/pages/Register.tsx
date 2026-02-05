@@ -167,7 +167,7 @@ const Register = () => {
             </div>
           </form>
 
-          <h3 className="mt-6 text-sm">
+          <h3 className="text-center mt-4">
             Já tem uma conta?{" "}
             <a href="/" className="underline text-blue-600 font-bold">
               faça login
