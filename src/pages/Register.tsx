@@ -6,22 +6,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const schema = z.object({
-    name: z
-      .string("Nome é necessário")
-      .max(99, "O nome não pode ultrapassar 99 caracteres"),
-    nickname: z
-      .string("nickname é obrigatório")
-      .min(4, "O nickname deve ter ao menos 4 caractéres")
-      .max(14, "O nickname deve ter no máximo 14 carácteres"),
-    email: z.email("Insira um email válido"),
-    password: z
-      .string()
-      .min(6, "A senha deve ter no mínimo 6 caractéres")
-      .max(25, "A senha deve ter no máximo 25 carácteres"),
-    confirmPassword: z.string("Confirme a senha"),
-  });
-
+  const schema = z
+    .object({
+      name: z
+        .string()
+        .min(1, "Nome é necessário")
+        .max(99, "O nome não pode ultrapassar 99 caracteres"),
+      nickname: z
+        .string()
+        .min(4, "O nickname deve ter ao menos 4 caracteres")
+        .max(14, "O nickname deve ter no máximo 14 caracteres"),
+      email: z.string().email("Insira um email válido"),
+      password: z
+        .string()
+        .min(6, "A senha deve ter no mínimo 6 caracteres")
+        .max(25, "A senha deve ter no máximo 25 caracteres"),
+      confirmPassword: z.string().min(1, "Confirme a senha"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "As senhas não coincidem",
+      path: ["confirmPassword"],
+    });
   type FormDataType = z.infer<typeof schema>;
 
   const {
