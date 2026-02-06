@@ -1,5 +1,4 @@
 import { Box, Modal } from "@mui/material";
-import React from "react";
 
 interface RemoveSongModalProps {
   open: boolean;

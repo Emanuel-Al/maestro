@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { IoMoonSharp } from "react-icons/io5";
 import { MdWbSunny } from "react-icons/md";
 import useDarkMode from "../../hooks/useDarkMode";

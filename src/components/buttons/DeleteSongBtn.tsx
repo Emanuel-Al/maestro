@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { deleteSong, getSongById } from "../../api/songs";
+import { deleteSong } from "../../api/songs";
 import RemoveSongModal from "../modal/RemoveSongModal";
 
 interface deleteSongProp {
@@ -13,7 +13,7 @@ const DeleteSongBtn = ({ id, name, onDeleted }: deleteSongProp) => {
   const [open, setOpen] = useState(false);
   const handleDelete = async () => {
     try {
-      const response = await deleteSong(id);
+      await deleteSong(id);
       setOpen(false);
       onDeleted();
     } catch (e: any) {

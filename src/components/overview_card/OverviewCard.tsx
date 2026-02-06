@@ -1,4 +1,3 @@
-import React from "react";
 import "tailwindcss";
 interface OverviewCardProps {
   status: string;

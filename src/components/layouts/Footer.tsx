@@ -1,4 +1,3 @@
-import React from "react";
 import { FaHouse } from "react-icons/fa6";
 import { GiMusicalNotes } from "react-icons/gi";
 import { NavLink } from "react-router";

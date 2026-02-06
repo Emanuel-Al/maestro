@@ -1,5 +1,4 @@
 import { IoIosLogOut } from "react-icons/io";
-import useDarkMode from "../../hooks/useDarkMode";
 import { useNavigate } from "react-router";
 
 const LogoutBtn = () => {

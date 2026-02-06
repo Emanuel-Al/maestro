@@ -1,4 +1,3 @@
-import React from "react";
 import { MdFilterAlt } from "react-icons/md";
 
 type filterBtnProps = {

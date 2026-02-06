@@ -63,7 +63,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
   const handleChange = (
     event:
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent<string>
+      | SelectChangeEvent<string>,
   ) => {
     const { name, value } = event.target;
     if (name == "band") {
@@ -75,7 +75,7 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async () => {
     try {
       await createSong(formData);
       console.log("Música criada com sucesso");
@@ -203,10 +203,10 @@ const AddSongModal = ({ open, onClose }: AddSongModalProps) => {
                   {status === "WANT_TO_LEARN"
                     ? "Quero aprender"
                     : status === "LEARNING"
-                    ? "Aprendendo"
-                    : status === "PRACTICING"
-                    ? "Praticando"
-                    : "Aprendido"}
+                      ? "Aprendendo"
+                      : status === "PRACTICING"
+                        ? "Praticando"
+                        : "Aprendido"}
                 </MenuItem>
               ))}
             </Select>

@@ -1,4 +1,3 @@
-import React from "react";
 import { CiMusicNote1 } from "react-icons/ci";
 import AddSongBtn from "../buttons/AddSongBtn";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import MusicProgress from "../components/music_progress/MusicProgress";
 import AddSongBtn from "../components/buttons/AddSongBtn";
 import Chart from "../components/chart/Chart";

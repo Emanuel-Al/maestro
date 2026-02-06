@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 
 interface TagProps {
@@ -23,7 +22,7 @@ const Tag = ({ status }: TagProps) => {
            ${
              status === "LEARNT" &&
              "text-[#42A34A] bg-[#DCFCE7] rounded-2xl w-auto font-semibold p-2"
-           }`
+           }`,
         )}
       >
         {status === `WANT_TO_LEARN` && "Quero aprender"}

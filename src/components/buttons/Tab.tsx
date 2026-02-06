@@ -1,5 +1,3 @@
-import React from "react";
-
 interface TabProps {
   isActive: boolean;
   page: string;
