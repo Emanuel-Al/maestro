@@ -35,20 +35,17 @@ export async function authUser(loginData: loginForm) {
 
 export async function createUser(registerData: registerData) {
   const url = `${API_URL}/user/`;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(registerData),
-    });
 
-    if (!response.ok) {
-      throw new Error("Erro criando usuário");
-    }
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(registerData),
+  });
 
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.log(e);
+  if (!response.ok) {
+    const errorBody = await response.text(); // opcional
+    throw new Error(errorBody || "Erro criando usuário");
   }
+
+  return true;
 }

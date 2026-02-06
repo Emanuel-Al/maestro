@@ -4,23 +4,27 @@ import { createUser } from "../api/auth";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const navigate = useNavigate();
   const schema = z
     .object({
       name: z
         .string()
         .min(1, "Nome é necessário")
-        .max(99, "O nome não pode ultrapassar 99 caracteres"),
+        .max(99, "Máximo 99 caracteres"),
       nickname: z
         .string()
-        .min(4, "O nickname deve ter ao menos 4 caracteres")
-        .max(14, "O nickname deve ter no máximo 14 caracteres"),
+        .min(4, "Mínimo 4 caracteres")
+        .max(14, "Máximo 14 caracteres"),
       email: z.string().email("Insira um email válido"),
       password: z
         .string()
-        .min(6, "A senha deve ter no mínimo 6 caracteres")
-        .max(25, "A senha deve ter no máximo 25 caracteres"),
+        .min(6, "Mínimo 6 caracteres")
+        .max(25, "Máximo 25 caracteres"),
       confirmPassword: z.string().min(1, "Confirme a senha"),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -39,10 +43,19 @@ const Register = () => {
 
   const onSubmit = async (data: FormDataType) => {
     try {
-      if (data.password != data.confirmPassword) {
-      }
-      await createUser(data);
-    } catch (e) {
+      const { confirmPassword, ...userData } = data;
+      await createUser(userData);
+      toast.success("Conta criada com sucesso!", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      setTimeout(() => navigate("/"), 1500);
+    } catch (e: any) {
+      const errorMessage = e.message;
+      toast.error(errorMessage || "Erro ao criar conta", {
+        position: "top-right",
+        autoClose: 1500,
+      });
       console.log(e);
     }
   };

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const schema = z.object({
@@ -32,9 +34,18 @@ const Login = () => {
       const response = await authUser(data);
       if (response.token) {
         localStorage.setItem("token", response.token);
-        navigate("/home");
+        toast.success("Login realizado com sucesso!", {
+          position: "top-right",
+          autoClose: 1500,
+        });
+        setTimeout(() => navigate("/home"), 1500);
       }
-    } catch (e) {
+    } catch (e: any) {
+      const errorMessage = "E-mail ou senha incorretos";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 3000,
+      });
       console.log(e);
     }
   };
