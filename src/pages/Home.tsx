@@ -57,7 +57,7 @@ const Home = () => {
           <NoSongs />
         </div>
       ) : (
-        <div className="min-h-screen flex flex-col items-center px-6 p-1.5 w-full bg-[#F8F8F8] dark:bg-[#121212]">
+        <div className="min-h-screen flex flex-col items-center px-6 p-1.5 w-full bg-[#F8F8F8] dark:bg-[#121212] overflow-y-auto no-scrollbar">
           {/* HEADER */}
           <header className="flex justify-between w-full mt-4 mb-6">
             <div>

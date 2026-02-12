@@ -42,22 +42,31 @@ const Register = () => {
   });
 
   const onSubmit = async (data: FormDataType) => {
-    try {
-      const { confirmPassword, ...userData } = data;
-      await createUser(userData);
-      toast.success("Conta criada com sucesso!", {
+    const { confirmPassword, ...userData } = data;
+    await toast.promise(
+      createUser(userData),
+      {
+        pending: {
+          render() {
+            return "Criando sua conta...";
+          },
+        },
+        success: {
+          render() {
+            setTimeout(() => navigate("/"), 1500);
+            return "Conta criada com sucesso!";
+          },
+        },
+        error: {
+          render({ data }: any) {
+            return data.message || "Erro ao criar conta";
+          },
+        },
+      },
+      {
         position: "top-right",
-        autoClose: 1500,
-      });
-      setTimeout(() => navigate("/"), 1500);
-    } catch (e: any) {
-      const errorMessage = e.message;
-      toast.error(errorMessage || "Erro ao criar conta", {
-        position: "top-right",
-        autoClose: 1500,
-      });
-      console.log(e);
-    }
+      },
+    );
   };
 
   return (
@@ -172,10 +181,10 @@ const Register = () => {
 
               <button
                 type="submit"
-                className="text-white font-bold bg-[#030407] p-3 rounded-xl flex justify-center items-center gap-2 hover:opacity-60 transition"
+                className={`text-white font-bold bg-[#030407] p-3 rounded-xl flex justify-center items-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:opacity-80"}`}
                 disabled={isSubmitting}
               >
-                Criar conta <FaArrowRight />
+                {isSubmitting ? "Processando" : "Criar conta"} <FaArrowRight />
               </button>
             </div>
           </form>

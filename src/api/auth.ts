@@ -21,8 +21,6 @@ export async function authUser(loginData: loginForm) {
       body: JSON.stringify(loginData),
     });
 
-    console.log(JSON.stringify(loginData));
-
     if (!response.ok) {
       throw new Error("Erro autenticando usuário");
     }
@@ -43,7 +41,7 @@ export async function createUser(registerData: registerData) {
   });
 
   if (!response.ok) {
-    const errorBody = await response.text(); // opcional
+    const errorBody = await response.text();
     throw new Error(errorBody || "Erro criando usuário");
   }
 
